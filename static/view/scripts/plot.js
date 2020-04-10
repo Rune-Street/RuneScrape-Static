@@ -8,7 +8,6 @@ var datetime_options = {
 
 // Transform and get json from abc.def/ghi/view --> abc.def/ghi
 Plotly.d3.json( window.location.href.split( "/view", 1 )[ 0 ], function ( err, data ) {
-
   datetimes = data.map( element => new Date( element[ "time" ] ).toLocaleDateString( "en-GB", datetime_options ) );
 
   function unpack( input, key ) {
@@ -19,11 +18,10 @@ Plotly.d3.json( window.location.href.split( "/view", 1 )[ 0 ], function ( err, d
     return input.map( element => new Date( element[ "time" ] ).toLocaleDateString( "en-GB", datetime_options ) )
   }
 
-
   var trace1 = {
     type: "scatter",
     mode: "lines",
-    name: data[ 0 ].name.concat( " buy price" ),
+    name: data[ 0 ].name + " buy price",
     // x: unpack( data, "time" ),
     // x: unmeme_dates( data ),
     x: datetimes,
@@ -37,7 +35,7 @@ Plotly.d3.json( window.location.href.split( "/view", 1 )[ 0 ], function ( err, d
   var trace2 = {
     type: "scatter",
     mode: "lines",
-    name: data[ 0 ].name.concat( " sell price" ),
+    name: data[ 0 ].name + " sell price",
     // x: unpack( data, "time" ),
     // x: unmeme_dates( data ),
     x: datetimes,
@@ -51,7 +49,7 @@ Plotly.d3.json( window.location.href.split( "/view", 1 )[ 0 ], function ( err, d
   var trace3 = {
     type: "bar",
     // mode: "lines",
-    name: data[ 0 ].name.concat( " buy quantity" ),
+    name: data[ 0 ].name + " buy quantity",
     // x: unpack( data, "time" ),
     // x: unmeme_dates( data ),
     x: datetimes,
@@ -65,7 +63,7 @@ Plotly.d3.json( window.location.href.split( "/view", 1 )[ 0 ], function ( err, d
   var trace4 = {
     type: "bar",
     // mode: "lines",
-    name: data[ 0 ].name.concat( " sell quantity" ),
+    name: data[ 0 ].name + " sell quantity",
     // x: unpack( data, "time" ),
     // x: unmeme_dates( data ),
     x: datetimes,
@@ -76,10 +74,12 @@ Plotly.d3.json( window.location.href.split( "/view", 1 )[ 0 ], function ( err, d
     yaxis: 'y2',
   }
 
-  var data = [ trace1, trace2, trace3, trace4 ];
+  var graph_traces = [ trace1, trace2, trace3, trace4 ];
 
   var layout = {
-    title: data[ 0 ].name,
+    title: {
+      text: data[ 0 ].name,
+    },
     xaxis: {
       tickmode: 'linear',
       tick0: 0,
@@ -104,5 +104,5 @@ Plotly.d3.json( window.location.href.split( "/view", 1 )[ 0 ], function ( err, d
   var config = {
     responsive: true
   };
-  Plotly.newPlot( 'plotly', data, layout, config );
+  Plotly.newPlot( 'plotly', graph_traces, layout, config );
 } )
