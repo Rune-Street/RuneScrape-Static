@@ -1,3 +1,5 @@
+cd "${0%/*}"
+
 docker build . -t "iexalt/runescrape-static" &
 docker stop runescrape-static &
 sleep 2
